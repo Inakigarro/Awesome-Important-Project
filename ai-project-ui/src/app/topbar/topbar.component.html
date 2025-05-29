@@ -1,0 +1,76 @@
+<nav class="topbar">
+	<app-button
+		[button]="this.mainButton"
+		[index]="0"
+		(buttonClick)="onMainClick()"
+	/>
+	<span class="topbar-title">{{ title }}</span>
+	<div class="secondary-btns">
+		<label class="theme-switch">
+			<input
+				type="checkbox"
+				[checked]="darkTheme"
+				(change)="toggleTheme()"
+			/>
+			<span class="slider"></span>
+			<span class="theme-icon"
+				><i [class]="darkTheme ? 'fa fa-moon' : 'fa fa-sun'"></i
+			></span>
+		</label>
+		<!-- Botones secundarios normales (solo desktop) -->
+		<ng-container
+			*ngIf="!this.showMenuButton"
+			class="secondary-btns-desktop"
+		>
+			@for (btn of secondaryButtons; track $index) {
+			<app-button
+				[button]="btn"
+				[index]="$index"
+				(buttonClick)="onSecondaryClick(btn, $index)"
+			/>
+
+			<!-- <button
+				class="secondary-btn"
+				[disabled]="btn.disabled"
+				(click)="onSecondaryClick(btn, $index)"
+			>
+				@if (btn.icon) {
+				<span
+					class="icon"
+					[class]="btn.icon"
+				></span>
+				}
+				<span class="btn-label">{{ btn.label }}</span>
+			</button> -->
+			}
+		</ng-container>
+		<!-- Botón de menú (solo mobile) -->
+		<button
+			class="secondary-btn menu-btn"
+			(click)="toggleMenu()"
+		>
+			<span class="icon fa fa-ellipsis-v"></span>
+		</button>
+		<!-- Menú superpuesto -->
+		<div
+			class="mobile-menu"
+			*ngIf="showMenu"
+		>
+			@for (btn of secondaryButtons; track $index) {
+			<button
+				class="secondary-btn"
+				[disabled]="btn.disabled"
+				(click)="onSecondaryClickMobile(btn, $index)"
+			>
+				@if (btn.icon) {
+				<span
+					class="icon"
+					[class]="btn.icon"
+				></span>
+				}
+				<span class="btn-label">{{ btn.label }}</span>
+			</button>
+			}
+		</div>
+	</div>
+</nav>

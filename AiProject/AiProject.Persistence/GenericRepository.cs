@@ -1,0 +1,60 @@
+using AiProject.Contracts;
+using Microsoft.EntityFrameworkCore;
+
+namespace AiProject.Persistence;
+
+public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey>, IDisposable where TEntity : class
+{
+    private readonly ApplicationDbContext _context;
+    private readonly DbSet<TEntity> _dbSet;
+    private bool _disposed;
+
+    public GenericRepository(ApplicationDbContext context)
+    {
+        _context = context;
+        _dbSet = _context.Set<TEntity>();
+    }
+
+    public async Task<TEntity?> GetByIdAsync(TKey id, CancellationToken cancellationToken)
+    {
+        return await _dbSet.FindAsync(id, cancellationToken);
+    }
+
+    public async Task<IEnumerable<TEntity>> GetAllAsync(CancellationToken cancellationToken)
+    {
+        return await _dbSet.ToListAsync(cancellationToken);
+    }
+
+    public async Task AddAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        await _dbSet.AddAsync(entity, cancellationToken);
+    }
+
+    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        _dbSet.Update(entity);
+    }
+
+    public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+    {
+        _dbSet.Remove(entity);
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposed)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            _disposed = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+}

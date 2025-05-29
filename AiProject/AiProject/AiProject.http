@@ -1,0 +1,51 @@
+@AiProject_HostAddress = https://localhost:7259
+@AccessToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzNjFiYzhmNC1lMjhiLTQxYmYtODA1Yy1hYzQ4NDYwZjdjZmMiLCJlbWFpbCI6ImVtYWlsQGVtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJBZG1pbi03IiwiZXhwIjoxNzQ4MzIwNTYyLCJpc3MiOiJBaVByb2plY3RJc3N1ZXIifQ.Jy3FvoKmJgI3s5884Id1y-ZQcfsoAK1g07UxwyQTyGw
+@RefreshToken = CihtNSgr0jUcUQr+8CvnPKMvWFnLWxsji6nt2hTEhjd7Y1bJ0nHDjm2nQzLnFNZusRRBOlsA3unDNeaxebgoIw==
+
+GET {{AiProject_HostAddress}}/api/usuarios
+Accept: application/json
+
+###
+
+POST {{AiProject_HostAddress}}/api/usuarios
+Content-Type: application/json
+{
+  "NombreUsuario": "Admin-7",
+  "Contrasena": "Admin-7",
+  "Email": "email@email.com"
+}
+
+###
+
+DELETE {{AiProject_HostAddress}}/api/usuarios/361BC8F4-E28B-41BF-805C-AC48460F7CFC
+Content-Type: application/json
+
+###
+
+POST {{AiProject_HostAddress}}/api/auth/login
+Content-Type: application/json
+{
+  "email": "email@email.com",
+  "password": "Admin-7"
+}
+
+###
+
+POST {{AiProject_HostAddress}}/api/auth/add-role
+Content-Type: Application/json
+{
+  "email": "email@email.com",
+  "role": "Admin"
+}
+
+###
+
+POST {{AiProject_HostAddress}}/api/canchas
+Authorization: Bearer {{AccessToken}}
+Content-Type: application/json
+
+{
+  "TipoSuelo": "PolvoLadrillo"
+}
+
+###

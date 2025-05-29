@@ -1,0 +1,9 @@
+<app-topbar
+	[title]="title"
+	[mainButton]="mainButton"
+	[secondaryButtons]="secondaryButtons"
+	(buttonClick)="onTopbarButton($event)"
+></app-topbar>
+<main class="app-container main-below-topbar">
+	<router-outlet></router-outlet>
+</main>

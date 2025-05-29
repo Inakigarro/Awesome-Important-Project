@@ -1,0 +1,125 @@
+.register-form {
+	max-width: 350px;
+	margin: 2rem auto;
+	padding: 2rem 2.5rem;
+	background: var(--color-bg-alt);
+	color: var(--color-text);
+	border-radius: 1.2rem;
+	box-shadow: 0 2px 16px 0 #0002;
+	display: flex;
+	flex-direction: column;
+	gap: 1.2rem;
+	font-family: inherit;
+}
+.register-form h2 {
+	text-align: center;
+	margin-bottom: 1rem;
+	font-family: inherit;
+}
+.register-form label {
+	display: flex;
+	flex-direction: column;
+	gap: 0.3rem;
+	font-size: 1rem;
+}
+.register-form input {
+	padding: 0.6rem 1rem;
+	border-radius: 0.6rem;
+	border: 1px solid var(--color-border);
+	font-size: 1rem;
+	background: var(--color-bg);
+	color: var(--color-text);
+	font-family: inherit;
+}
+.register-form button {
+	margin-top: 1rem;
+	padding: 0.7rem 0;
+}
+.register-form button:disabled {
+	background: #ccc;
+	cursor: not-allowed;
+	color: #888;
+}
+.login-link {
+	text-align: center;
+	margin-top: 1rem;
+	font-size: 0.97rem;
+}
+.login-link a {
+	color: var(--color-primary);
+	text-decoration: underline;
+	font-weight: 500;
+}
+.user-section,
+.socio-section {
+	margin-bottom: 1.5rem;
+	padding: 1rem 1.2rem;
+	border-radius: 0.7rem;
+	border: 1px solid var(--color-border);
+	background: var(--color-bg);
+}
+.user-section legend,
+.socio-section legend {
+	font-weight: bold;
+	font-size: 1.05rem;
+	margin-bottom: 0.5rem;
+	color: var(--color-primary);
+	padding: 0 0.5rem;
+}
+.user-section label,
+.socio-section label {
+	margin-bottom: 0.7rem;
+}
+@media (max-width: 600px) {
+	.register-form {
+		padding: 1.2rem 0.7rem;
+		max-width: 98vw;
+	}
+}
+.toast-success {
+	position: fixed;
+	top: 2.5rem;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #2ecc40;
+	color: #fff;
+	padding: 1rem 2.2rem;
+	border-radius: 1.2rem;
+	box-shadow: 0 2px 16px 0 #0003;
+	font-size: 1.1rem;
+	z-index: 1000;
+	animation: fadeInOut 1.5s;
+}
+.toast-error {
+	position: fixed;
+	top: 2.5rem;
+	left: 50%;
+	transform: translateX(-50%);
+	background: #e74c3c;
+	color: #fff;
+	padding: 1rem 2.2rem;
+	border-radius: 1.2rem;
+	box-shadow: 0 2px 16px 0 #0003;
+	font-size: 1.1rem;
+	z-index: 1000;
+	animation: fadeInOut 2.5s;
+}
+
+@keyframes fadeInOut {
+	0% {
+		opacity: 0;
+		transform: translateX(-50%) scale(0.95);
+	}
+	10% {
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
+	90% {
+		opacity: 1;
+		transform: translateX(-50%) scale(1);
+	}
+	100% {
+		opacity: 0;
+		transform: translateX(-50%) scale(0.95);
+	}
+}

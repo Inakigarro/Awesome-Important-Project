@@ -1,0 +1,36 @@
+<form
+	class="login-form"
+	(ngSubmit)="onSubmit()"
+	#loginForm="ngForm"
+>
+	<h2>Iniciar sesión</h2>
+	<label
+		>Email
+		<input
+			type="email"
+			name="email"
+			[(ngModel)]="email"
+			required
+			autocomplete="username"
+		/>
+	</label>
+	<label
+		>Contraseña
+		<input
+			type="password"
+			name="password"
+			[(ngModel)]="password"
+			required
+			autocomplete="current-password"
+		/>
+	</label>
+	<app-button
+		class="login-button"
+		[button]="this.submitButton"
+		[classes]="['btn-width-100']"
+		(buttonClick)="onSubmit()"
+	/>
+	<div class="register-link">
+		¿No tienes cuenta? <a routerLink="/register">Crear cuenta</a>
+	</div>
+</form>

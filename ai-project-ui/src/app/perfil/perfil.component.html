@@ -1,0 +1,145 @@
+<div class="perfil-panel">
+	<nav class="perfil-sidebar">
+		<h3>Panel de usuario</h3>
+		<button
+			[class.active]="activeSection === 'perfil'"
+			(click)="activeSection = 'perfil'"
+		>
+			Perfil
+		</button>
+		<button
+			*ngIf="form.roles.includes('Admin')"
+			[class.active]="activeSection === 'canchas'"
+			(click)="activeSection = 'canchas'"
+		>
+			Canchas
+		</button>
+	</nav>
+	<section class="perfil-content">
+		<ng-container [ngSwitch]="activeSection">
+			<form
+				*ngSwitchCase="'perfil'"
+				(ngSubmit)="onSubmit()"
+				#perfilForm="ngForm"
+			>
+				<h2>Perfil</h2>
+				<fieldset class="user-section">
+					<legend>Datos de usuario</legend>
+					<label>
+						Nombre de usuario
+						<input
+							type="text"
+							name="userName"
+							[(ngModel)]="form.userName"
+							[readonly]="!isEditUser"
+						/>
+					</label>
+					<label>
+						Email
+						<input
+							type="email"
+							name="email"
+							[(ngModel)]="form.socio.email"
+							[readonly]="!isEditUser"
+						/>
+					</label>
+					<label>
+						Roles
+						<input
+							type="text"
+							name="roles"
+							[value]="form.roles.length > 0 ? form.roles.join(', ') : '-'"
+							readonly
+						/>
+					</label>
+					<div class="edit-actions">
+						<button
+							*ngIf="!isEditUser"
+							type="button"
+							(click)="onEditUser()"
+						>
+							Editar
+						</button>
+						<span *ngIf="isEditUser">
+							<button
+								type="button"
+								(click)="onCancelEditUser()"
+							>
+								Cancelar
+							</button>
+							<button
+								type="button"
+								(click)="onSaveUser()"
+							>
+								Guardar
+							</button>
+						</span>
+					</div>
+				</fieldset>
+				<fieldset class="socio-section">
+					<legend>Datos de socio</legend>
+					<label>
+						Nombre
+						<input
+							type="text"
+							name="socioNombre"
+							[(ngModel)]="form.socio.nombre"
+							[readonly]="!isEditSocio"
+						/>
+					</label>
+					<label>
+						Apellido
+						<input
+							type="text"
+							name="socioApellido"
+							[(ngModel)]="form.socio.apellido"
+							[readonly]="!isEditSocio"
+						/>
+					</label>
+					<label>
+						Teléfono
+						<input
+							type="tel"
+							name="socioTelefono"
+							[(ngModel)]="form.socio.telefono"
+							[readonly]="!isEditSocio"
+						/>
+					</label>
+					<label>
+						Número de socio
+						<input
+							type="text"
+							name="numeroSocio"
+							[(ngModel)]="form.socio.numeroSocio"
+							readonly
+						/>
+					</label>
+					<div class="edit-actions">
+						<button
+							*ngIf="!isEditSocio"
+							type="button"
+							(click)="onEditSocio()"
+						>
+							Editar
+						</button>
+						<span *ngIf="isEditSocio">
+							<button
+								type="button"
+								(click)="onCancelEditSocio()"
+							>
+								Cancelar
+							</button>
+							<button
+								type="button"
+								(click)="onSaveSocio()"
+							>
+								Guardar
+							</button>
+						</span>
+					</div>
+				</fieldset>
+			</form>
+			<app-admin-canchas *ngSwitchCase="'canchas'"></app-admin-canchas>
+		</ng-container>
+	</section>
+</div>

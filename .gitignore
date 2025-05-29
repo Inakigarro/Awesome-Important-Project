@@ -1,0 +1,51 @@
+# Node
+node_modules/
+dist/
+.env
+.env.*
+
+# Angular
+.angular/
+coverage/
+
+# Storybook
+storybook-static/
+*.story.ts
+*.stories.ts
+*.stories.js
+*.stories.jsx
+*.stories.tsx
+*.stories.mdx
+
+# VSCode
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Dotnet
+bin/
+obj/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+*.vs/
+
+# Logs
+*.log
+
+# Others
+.idea/
+*.swp
+*.tmp
+
+# Build outputs
+wwwroot/
+
+# Test
+TestResults/
+
+# Publish
+publish/

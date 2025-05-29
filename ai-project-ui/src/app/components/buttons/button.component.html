@@ -1,0 +1,23 @@
+<button
+	[type]="button.type || 'button'"
+	[disabled]="this.disabled"
+	[ngClass]="[
+		this.hasIcon ? 'has-icon' : '',
+		this.hasLoading ? 'loading' : '',
+		this.kind,
+		this.classes.join(' ')
+	]"
+	(click)="onClick()"
+>
+	@if (this.hasIcon) {
+	<span
+		class="icon"
+		[class]="button.icon"
+	></span>
+	}
+	<span class="btn-label">{{ button.label }}</span>
+	<span
+		*ngIf="hasLoading"
+		class="spinner"
+	></span>
+</button>

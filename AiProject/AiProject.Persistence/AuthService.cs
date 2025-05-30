@@ -31,7 +31,7 @@ public class AuthService : IAuthService
         var user = await _userManager.FindByEmailAsync(request.Email);
         if (user == null || !await _userManager.CheckPasswordAsync(user, request.Password))
         {
-            throw new UnauthorizedAccessException("Credenciales inválidas");
+            throw new UnauthorizedAccessException("Credenciales invï¿½lidas");
         }
 
         var accessToken = await GenerateJwtToken(user);
@@ -53,11 +53,11 @@ public class AuthService : IAuthService
 
         if (refreshToken == null || refreshToken.Expiration < DateTime.UtcNow || refreshToken.Revoked != null)
         {
-            throw new UnauthorizedAccessException("Refresh token inválido o expirado");
+            throw new UnauthorizedAccessException("Refresh token invï¿½lido o expirado");
         }
 
         refreshToken.Revoked = DateTime.UtcNow;
-        await _unitOfWork.Repository<RefreshToken, Guid>().UpdateAsync(refreshToken, default);
+        _unitOfWork.Repository<RefreshToken, Guid>().UpdateAsync(refreshToken);
         await _unitOfWork.SaveChangesAsync();
 
         var user = refreshToken.Usuario;

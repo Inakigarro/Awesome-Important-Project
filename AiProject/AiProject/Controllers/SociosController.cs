@@ -29,8 +29,11 @@ public class SociosController: ControllerBase
     [HttpPost]
     public async Task<IActionResult> Create([FromBody] CrearSocioRequest request, CancellationToken cancellationToken)
     {
-        var id = await _socioService.AddAsync(request, cancellationToken);
-        return CreatedAtAction(nameof(GetById), new { id }, null);
+        var result = await _socioService.AddAsync(request, cancellationToken);
+        if (result.Success)
+            return Ok(result);
+        else
+            return BadRequest(result);
     }
 
     [HttpGet("{id}")]

@@ -85,6 +85,7 @@
 		[button]="registerButton"
 		[classes]="['btn-width-100']"
 		[disabled]="!registerForm.form.valid"
+		(buttonClick)="this.onSubmit()"
 	/>
 	<div class="login-link">
 		¿Ya tienes cuenta? <a routerLink="/login">Iniciar sesión</a>

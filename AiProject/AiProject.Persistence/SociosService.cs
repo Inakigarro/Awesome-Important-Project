@@ -15,47 +15,45 @@ public class SociosService : ISociosService
         _usuarioService = usuarioService;
     }
 
-    public async Task<SocioDto> AddAsync(CrearSocioRequest socioRequest, CancellationToken cancellationToken)
+    public async Task<OperationResult> AddAsync(CrearSocioRequest socioRequest, CancellationToken cancellationToken)
     {
-        // Crear usuario asociado
-        var usuario = new CrearUsuarioRequest()
+        try
         {
-            NombreUsuario = socioRequest.Username,
-            Contrasena = socioRequest.Password,
-            Email = socioRequest.Email,
-        };
+            // Crear usuario asociado
+            var usuario = new CrearUsuarioRequest()
+            {
+                NombreUsuario = socioRequest.Username,
+                Contrasena = socioRequest.Password,
+                Email = socioRequest.Email,
+            };
 
-        var usuarioCreado = await _usuarioService.AddAsync(usuario, cancellationToken);
+            var usuarioCreado = await _usuarioService.AddAsync(usuario, cancellationToken);
 
-        if (usuarioCreado == null)
-        {
-            throw new Exception("Error al crear el usuario asociado al socio.");
+            if (usuarioCreado == null)
+            {
+                return new OperationResult { Success = false, Message = "Error al crear el usuario asociado al socio." };
+            }
+
+            // Crear socio asociado al usuario
+            var socio = new Socio()
+            {
+                Id = Guid.NewGuid(),
+                Nombre = socioRequest.Nombre,
+                Apellido = socioRequest.Apellido,
+                Telefono = socioRequest.Telefono,
+                Email = socioRequest.Email,
+                UsuarioId = usuarioCreado.Id
+            };
+
+            await _unitOfWork.Repository<Socio, Guid>().AddAsync(socio, cancellationToken);
+            await _unitOfWork.SaveChangesAsync(cancellationToken);
+
+            return new OperationResult { Success = true, Message = "Socio creado correctamente." };
         }
-
-        // Crear socio asociado al usuario
-        var socio = new Socio()
+        catch (Exception ex)
         {
-            Id = Guid.NewGuid(),
-            Nombre = socioRequest.Nombre,
-            Apellido = socioRequest.Apellido,
-            Telefono = socioRequest.Telefono,
-            Email = socioRequest.Email,
-            UsuarioId = usuarioCreado.Id
-        };
-
-        await _unitOfWork.Repository<Socio, Guid>().AddAsync(socio, cancellationToken);
-        await _unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return new SocioDto
-        {
-            Id = socio.Id,
-            NumeroSocio = socio.NumeroSocio,
-            Nombre = socio.Nombre,
-            Apellido = socio.Apellido,
-            Email = socio.Email,
-            Telefono = socio.Telefono,
-            Username = usuarioCreado.NombreUsuario
-        };
+            return new OperationResult { Success = false, Message = $"Error al crear el socio: {ex.Message}" };
+        }
     }
 
     public async Task DeleteAsync(Guid id, CancellationToken cancellationToken)
@@ -64,7 +62,7 @@ public class SociosService : ISociosService
         var socio = await socioRepo.GetByIdAsync(id, cancellationToken);
         if (socio == null)
             throw new Exception("Socio no encontrado");
-        await socioRepo.DeleteAsync(socio, cancellationToken);
+        socioRepo.DeleteAsync(socio);
         await _usuarioService.DeleteAsync(socio.UsuarioId, cancellationToken);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
@@ -140,7 +138,7 @@ public class SociosService : ISociosService
         socio.Apellido = socioRequest.Apellido;
         socio.Email = socioRequest.Email;
         socio.Telefono = socioRequest.Telefono;
-        await socioRepo.UpdateAsync(socio, cancellationToken);
+        socioRepo.UpdateAsync(socio);
 
         // Actualizar datos del usuario asociado
         await _usuarioService.UpdateAsync(new ActualizarUsuarioRequest

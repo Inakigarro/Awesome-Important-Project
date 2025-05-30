@@ -30,12 +30,12 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
         await _dbSet.AddAsync(entity, cancellationToken);
     }
 
-    public async Task UpdateAsync(TEntity entity, CancellationToken cancellationToken)
+    public void UpdateAsync(TEntity entity)
     {
         _dbSet.Update(entity);
     }
 
-    public async Task DeleteAsync(TEntity entity, CancellationToken cancellationToken)
+    public void DeleteAsync(TEntity entity)
     {
         _dbSet.Remove(entity);
     }

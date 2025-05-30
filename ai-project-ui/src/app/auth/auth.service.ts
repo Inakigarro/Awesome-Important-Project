@@ -45,6 +45,11 @@ export interface UserData {
 	};
 }
 
+export interface OperationResult {
+	success: boolean;
+	message: string;
+}
+
 @Injectable({ providedIn: "root" })
 export class AuthService {
 	private readonly authUrl = "https://localhost:7259/api/auth";
@@ -60,10 +65,8 @@ export class AuthService {
 			.pipe(tap((res) => this.saveTokens(res)));
 	}
 
-	register(data: RegisterRequest): Observable<AuthResponse> {
-		return this.http
-			.post<AuthResponse>(`${this.sociosUrl}`, data)
-			.pipe(tap((res) => this.saveTokens(res)));
+	register(data: RegisterRequest): Observable<OperationResult> {
+		return this.http.post<OperationResult>(`${this.sociosUrl}`, data);
 	}
 
 	private saveTokens(res: AuthResponse): void {

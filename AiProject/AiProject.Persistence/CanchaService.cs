@@ -36,7 +36,7 @@ public class CanchaService : ICanchaService
         if (cancha == null)
             throw new Exception("Cancha no encontrada");
         cancha.TipoSuelo = tipoSuelo;
-        await _unitOfWork.Repository<Cancha, int>().UpdateAsync(cancha, cancellationToken);
+        _unitOfWork.Repository<Cancha, int>().UpdateAsync(cancha);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
@@ -45,7 +45,7 @@ public class CanchaService : ICanchaService
         var cancha = await _unitOfWork.Repository<Cancha, int>().GetByIdAsync(id, cancellationToken);
         if (cancha == null)
             throw new Exception("Cancha no encontrada");
-        await _unitOfWork.Repository<Cancha, int>().DeleteAsync(cancha, cancellationToken);
+        _unitOfWork.Repository<Cancha, int>().DeleteAsync(cancha);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
     }
 }

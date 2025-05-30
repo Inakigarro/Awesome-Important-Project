@@ -7,4 +7,5 @@ public interface IGenericRepository<TEntity, TKey> where TEntity : class
     Task AddAsync(TEntity entity, CancellationToken cancellationToken);
     void UpdateAsync(TEntity entity);
     void DeleteAsync(TEntity entity);
+    Task<PagedResultDto<TEntity>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
 }

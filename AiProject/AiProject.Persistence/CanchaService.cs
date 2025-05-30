@@ -1,4 +1,5 @@
 using AiProject.Contracts;
+using AiProject.Contracts.Canchas;
 using AiProject.Domain;
 
 namespace AiProject.Persistence;
@@ -12,9 +13,20 @@ public class CanchaService : ICanchaService
         _unitOfWork = unitOfWork;
     }
 
-    public async Task<IEnumerable<Cancha>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<PagedResultDto<CanchaDto>> GetAllAsync(ObtenerCanchasRequest request, CancellationToken cancellationToken)
     {
-        return await _unitOfWork.Repository<Cancha, int>().GetAllAsync(cancellationToken);
+        var canchas = await _unitOfWork.Repository<Cancha, int>()
+            .GetPagedAsync(request.PageNumber, request.PageSize, cancellationToken);
+
+        return new()
+        {
+            TotalCount = canchas.TotalCount,
+            Items = canchas.Items.Select(c => new CanchaDto
+            {
+                Id = c.Id,
+                TipoSueloId = (int)c.TipoSuelo
+            })
+        };
     }
 
     public async Task<Cancha?> GetByIdAsync(int id, CancellationToken cancellationToken)

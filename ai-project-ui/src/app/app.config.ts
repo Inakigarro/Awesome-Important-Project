@@ -18,6 +18,8 @@ import { AuthEffects } from "./auth/state/auth.effects";
 import { appReducer } from "./state/app.reducer";
 import { AppEffects } from "./state/app.effects";
 import { AuthService } from "./auth/auth.service";
+import { canchasReducer } from "./modulos/canchas/state/canchas.reducer";
+import { CanchasEffects } from "./modulos/canchas/state/canchas.effects";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -27,9 +29,10 @@ export const appConfig: ApplicationConfig = {
 			withInterceptors([authInterceptorFn, spinnerInterceptorFn])
 		),
 		provideStore(),
-		provideState({ name: "auth", reducer: authReducer }),
 		provideState({ name: "app", reducer: appReducer }),
-		provideEffects([AuthEffects, AppEffects]),
+		provideState({ name: "auth", reducer: authReducer }),
+		provideState({ name: "canchas", reducer: canchasReducer }),
+		provideEffects([AuthEffects, AppEffects, CanchasEffects]),
 		provideStoreDevtools({
 			maxAge: 25,
 			autoPause: true,

@@ -40,6 +40,20 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
         _dbSet.Remove(entity);
     }
 
+    public async Task<PagedResultDto<TEntity>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken)
+    {
+        var totalCount = await _dbSet.CountAsync(cancellationToken);
+        var items = await _dbSet
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync(cancellationToken);
+        return new PagedResultDto<TEntity>
+        {
+            Items = items,
+            TotalCount = totalCount
+        };
+    }
+
     protected virtual void Dispose(bool disposing)
     {
         if (!_disposed)

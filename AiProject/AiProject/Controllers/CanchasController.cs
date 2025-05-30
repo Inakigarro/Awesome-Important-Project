@@ -17,9 +17,9 @@ public class CanchasController: ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll(CancellationToken cancellationToken)
+    public async Task<IActionResult> GetAll([FromQuery] ObtenerCanchasRequest request, CancellationToken cancellationToken)
     {
-        var canchas = await _canchaService.GetAllAsync(cancellationToken);
+        var canchas = await _canchaService.GetAllAsync(request, cancellationToken);
         return Ok(canchas);
     }
 

@@ -1,10 +1,11 @@
+using AiProject.Contracts.Canchas;
 using AiProject.Domain;
 
 namespace AiProject.Contracts;
 
 public interface ICanchaService
 {
-    Task<IEnumerable<Cancha>> GetAllAsync(CancellationToken cancellationToken);
+    Task<PagedResultDto<CanchaDto>> GetAllAsync(ObtenerCanchasRequest request,  CancellationToken cancellationToken);
     Task<Cancha?> GetByIdAsync(int id, CancellationToken cancellationToken);
     Task<int> AddAsync(TipoSuelo tipoSuelo, CancellationToken cancellationToken);
     Task UpdateAsync(int id, TipoSuelo tipoSuelo, CancellationToken cancellationToken);

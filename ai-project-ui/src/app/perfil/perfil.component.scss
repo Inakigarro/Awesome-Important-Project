@@ -204,19 +204,34 @@
 		position: relative;
 	}
 	.perfil-content {
-		padding: 1.2rem 0.7rem;
+		margin: 0 auto;
 		width: 100vw;
 		max-width: 100vw;
 		min-width: 0;
 		box-sizing: border-box;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 	}
 }
 
 @media (max-width: 600px) {
-	.perfil-content form input {
-		width: 100%;
+	.perfil-panel {
+		margin: 0 auto;
+		max-width: 98vw;
 		min-width: 0;
+		justify-content: center;
+		align-items: center;
+		display: flex;
+		flex-direction: column;
+	}
+	.perfil-content {
+		margin: 0 auto;
+		width: 100vw;
 		max-width: 100vw;
+		min-width: 0;
+		box-sizing: border-box;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 	}
 	.perfil-sidebar {
 		font-size: 0.97rem;

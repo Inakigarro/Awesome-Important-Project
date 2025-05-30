@@ -1,12 +1,11 @@
-import { Router, Routes } from "@angular/router";
+import { Routes } from "@angular/router";
 import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { PerfilComponent } from "./perfil/perfil.component";
-import { inject } from "@angular/core";
-import { AuthService } from "./auth/auth.service";
+import { authGuard } from "./auth/auth.guard";
 
 export const routes: Routes = [
 	{ path: "login", component: LoginComponent },
 	{ path: "register", component: RegisterComponent },
-	{ path: "perfil", component: PerfilComponent },
+	{ path: "perfil", component: PerfilComponent, canActivate: [authGuard] },
 ];

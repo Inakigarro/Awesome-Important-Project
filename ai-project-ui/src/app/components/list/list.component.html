@@ -1,0 +1,105 @@
+<table class="app-list-table">
+	<thead>
+		<tr>
+			<th *ngFor="let col of columns">{{ col.header }}</th>
+			<th></th>
+			<!-- Columna de acciones -->
+		</tr>
+	</thead>
+	<tbody>
+		<tr *ngFor="let row of pagedData">
+			<td *ngFor="let col of columns">
+				{{ row[col.property] }}
+			</td>
+			<td class="actions-cell">
+				<ng-container *ngIf="!isMobile; else mobileActions">
+					<button
+						type="button"
+						class="action-btn edit"
+						(click)="editRow(row)"
+					>
+						<span class="fa fa-pencil"></span>
+					</button>
+					<button
+						type="button"
+						class="action-btn delete"
+						(click)="deleteRow(row)"
+					>
+						<span class="fa fa-trash"></span>
+					</button>
+				</ng-container>
+				<ng-template #mobileActions>
+					<div class="actions-menu-wrapper">
+						<button
+							type="button"
+							class="action-btn menu"
+							(click)="toggleMenu(row)"
+						>
+							<span class="fa fa-ellipsis-v"></span>
+						</button>
+						<div
+							class="actions-menu"
+							*ngIf="openedMenuRow === row"
+						>
+							<button
+								type="button"
+								class="action-btn edit"
+								(click)="editRow(row); closeMenu()"
+							>
+								<span class="fa fa-pencil"></span> Editar
+							</button>
+							<button
+								type="button"
+								class="action-btn delete"
+								(click)="deleteRow(row); closeMenu()"
+							>
+								<span class="fa fa-trash"></span> Eliminar
+							</button>
+						</div>
+					</div>
+				</ng-template>
+			</td>
+		</tr>
+	</tbody>
+	<tfoot>
+		<tr>
+			<td
+				[attr.colspan]="columns.length + 1"
+				class="list-footer"
+			>
+				<div class="list-pagination-footer">
+					<div class="footer-left">
+						<span class="total-items">Total: {{ totalItems }}</span>
+					</div>
+					<div class="footer-right">
+						<select
+							[value]="pageSize"
+							(change)="onPageSizeChange($event)"
+						>
+							<option
+								*ngFor="let size of pageSizeOptions"
+								[value]="size"
+							>
+								{{ size }}
+							</option>
+						</select>
+						<span>por página</span>
+						<button
+							(click)="onPageChange(-1)"
+							[disabled]="pageIndex === 0"
+						>
+							&lt;
+						</button>
+						<span>Página {{ pageIndex + 1 }} de {{ totalPages }}</span>
+						<button
+							(click)="onPageChange(1)"
+							[disabled]="pageIndex + 1 >= totalPages"
+						>
+							&gt;
+						</button>
+					</div>
+				</div>
+			</td>
+		</tr>
+	</tfoot>
+</table>

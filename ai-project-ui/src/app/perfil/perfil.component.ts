@@ -3,7 +3,7 @@ import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
 import { AuthService } from "../auth/auth.service";
 import { filter, Subject, takeUntil } from "rxjs";
-import { AdminCanchasComponent } from "./admin-canchas.component";
+import { AdminCanchasComponent } from "../modulos/canchas/admin-canchas.component";
 import { UserData } from "../auth/models";
 
 @Component({

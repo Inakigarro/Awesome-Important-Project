@@ -1,5 +1,5 @@
 import { createAction, createActionGroup, props } from "@ngrx/store";
-import { UserData } from "../auth.service";
+import { UserData } from "../models";
 
 export const setAuthTokens = createAction(
 	"[Auth] Set Tokens",

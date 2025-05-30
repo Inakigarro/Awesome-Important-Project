@@ -1,6 +1,6 @@
 import { createReducer, on } from "@ngrx/store";
 import * as AuthActions from "./auth.actions";
-import { UserData } from "../auth.service";
+import { UserData } from "../models";
 
 export interface AuthState {
 	token: string | null;

@@ -1,8 +1,8 @@
 import {
 	ApplicationConfig,
-	provideZoneChangeDetection,
-	provideAppInitializer,
 	inject,
+	provideAppInitializer,
+	provideZoneChangeDetection,
 } from "@angular/core";
 import { provideRouter } from "@angular/router";
 import { provideHttpClient, withInterceptors } from "@angular/common/http";
@@ -11,11 +11,13 @@ import { provideEffects } from "@ngrx/effects";
 import { provideStoreDevtools } from "@ngrx/store-devtools";
 
 import { routes } from "./app.routes";
-import { AuthService } from "./auth/auth.service";
 import { authInterceptorFn } from "./auth/auth.interceptor";
 import { spinnerInterceptorFn } from "./auth/spinner.interceptor";
 import { authReducer } from "./auth/state/auth.reducer";
 import { AuthEffects } from "./auth/state/auth.effects";
+import { appReducer } from "./state/app.reducer";
+import { AppEffects } from "./state/app.effects";
+import { AuthService } from "./auth/auth.service";
 
 export const appConfig: ApplicationConfig = {
 	providers: [
@@ -26,7 +28,8 @@ export const appConfig: ApplicationConfig = {
 		),
 		provideStore(),
 		provideState({ name: "auth", reducer: authReducer }),
-		provideEffects([AuthEffects]),
+		provideState({ name: "app", reducer: appReducer }),
+		provideEffects([AuthEffects, AppEffects]),
 		provideStoreDevtools({
 			maxAge: 25,
 			autoPause: true,

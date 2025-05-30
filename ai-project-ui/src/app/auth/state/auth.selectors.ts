@@ -18,6 +18,11 @@ export const selectUserData = createSelector(
 	(state) => state.userData
 );
 
+export const selectUserLoggedIn = createSelector(
+	selectAuthState,
+	(state) => !!state.token && !!state.userData
+);
+
 export const selectAuthLoading = createSelector(
 	selectAuthState,
 	(state) => state.loading

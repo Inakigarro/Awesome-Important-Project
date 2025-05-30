@@ -1,9 +1,10 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import { AuthService, UserData } from "../auth/auth.service";
+import { AuthService } from "../auth/auth.service";
 import { filter, Subject, takeUntil } from "rxjs";
 import { AdminCanchasComponent } from "./admin-canchas.component";
+import { UserData } from "../auth/models";
 
 @Component({
 	selector: "app-perfil",
@@ -40,7 +41,7 @@ export class PerfilComponent implements OnInit, OnDestroy {
 	constructor(private authService: AuthService) {}
 
 	public ngOnInit() {
-		this.authService.userData
+		this.authService.userData$
 			.pipe(
 				takeUntil(this.destroy$),
 				filter((x): x is UserData => !!x)

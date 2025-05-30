@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { ShellComponent } from "./shell/shell.component";
 import type { TopbarButtonClickEvent } from "./shell/shell.component";
 import { AuthService } from "./auth/auth.service";
@@ -6,6 +6,9 @@ import { TOPBAR_BUTTONS_IDS } from "./topbar/topbar-buttons-ids";
 import { NavigationService } from "./navigation.service";
 import { SpinnerComponent } from "./spinner/spinner.component";
 import { TopbarButton } from "./components/buttons/button.interfaces";
+import { Subject, takeUntil } from "rxjs";
+import { Store } from "@ngrx/store";
+import { appInit } from "./state/app.actions";
 
 @Component({
 	selector: "app-root",
@@ -14,7 +17,7 @@ import { TopbarButton } from "./components/buttons/button.interfaces";
 	templateUrl: "./app.component.html",
 	styleUrl: "./app.component.scss",
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
 	title = "My Awesome Project";
 	mainButton: TopbarButton = {
 		id: TOPBAR_BUTTONS_IDS.homeButton,
@@ -25,20 +28,31 @@ export class AppComponent implements OnInit {
 		disabled: false,
 	};
 	secondaryButtons: TopbarButton[] = [];
+	private destroy$ = new Subject<void>();
+	private isUserLoggedIn = false;
 
 	constructor(
 		private readonly authService: AuthService,
-		private readonly navigationService: NavigationService
+		private readonly navigationService: NavigationService,
+		private readonly store: Store
 	) {}
 
 	public ngOnInit(): void {
-		this.authService.userLoggedIn.subscribe((isLoggedIn) =>
-			this.updateSecondaryButtons(isLoggedIn)
-		);
+		this.store.dispatch(appInit());
+		this.authService.isUserLoggedIn$
+			.pipe(takeUntil(this.destroy$))
+			.subscribe((isLoggedIn) => {
+				this.isUserLoggedIn = isLoggedIn;
+				this.updateSecondaryButtons();
+			});
+	}
+
+	public ngOnDestroy(): void {
+		this.destroy$.next();
+		this.destroy$.complete();
 	}
 
 	onTopbarButton(event: TopbarButtonClickEvent): void {
-		const isLoggedIn = this.authService.userLoggedIn.getValue();
 		switch (event.button.id) {
 			case TOPBAR_BUTTONS_IDS.loginButton:
 				this.navigationService.navigate("/login");
@@ -47,7 +61,7 @@ export class AppComponent implements OnInit {
 				this.navigationService.navigate("/register");
 				break;
 			case TOPBAR_BUTTONS_IDS.profileButton:
-				if (isLoggedIn) {
+				if (this.isUserLoggedIn) {
 					this.navigationService.navigate("/perfil");
 				} else {
 					this.navigationService.navigate("/login");
@@ -65,9 +79,9 @@ export class AppComponent implements OnInit {
 		}
 	}
 
-	private updateSecondaryButtons(isLoggedIn: boolean): void {
+	private updateSecondaryButtons() {
 		this.secondaryButtons = [];
-		isLoggedIn
+		this.isUserLoggedIn
 			? this.secondaryButtons.push(
 					{
 						id: TOPBAR_BUTTONS_IDS.profileButton,

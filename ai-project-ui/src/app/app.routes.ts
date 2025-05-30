@@ -8,19 +8,5 @@ import { AuthService } from "./auth/auth.service";
 export const routes: Routes = [
 	{ path: "login", component: LoginComponent },
 	{ path: "register", component: RegisterComponent },
-	{
-		path: "perfil",
-		component: PerfilComponent,
-		canActivate: [
-			() => {
-				const authService = inject(AuthService);
-				const router = inject(Router);
-				if (!authService.userLoggedIn.getValue()) {
-					router.navigate(["/login"]);
-					return false;
-				}
-				return true;
-			},
-		],
-	},
+	{ path: "perfil", component: PerfilComponent },
 ];

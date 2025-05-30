@@ -2,11 +2,12 @@ import { Component, OnDestroy } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { RouterLink } from "@angular/router";
 import { FormsModule } from "@angular/forms";
-import { AuthService, RegisterRequest } from "../auth.service";
+import { AuthService } from "../auth.service";
 import { Subject, takeUntil } from "rxjs";
 import { NavigationService } from "../../navigation.service";
 import { AppButtonComponent } from "../../components/buttons/button.component";
 import { RegisterButton } from "../../components/buttons/button.interfaces";
+import { RegisterRequest } from "../models";
 
 @Component({
 	selector: "app-register",

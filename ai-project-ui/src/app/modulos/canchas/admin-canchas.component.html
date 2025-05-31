@@ -1,8 +1,11 @@
 <h2>Administración de Canchas</h2>
 <p>Aquí podrás crear, editar y eliminar canchas.</p>
 <app-list
+	[listId]="this.listId"
 	[columns]="this.columns"
 	[data]="this.data$"
 	[totalItems]="this.totalCount$"
 	[totalPages]="this.totalPages$"
+	[pageSize]="(this.pageSize$ | async) ?? 10"
+	[pageIndex]="(this.pageIndex$ | async) ?? 0"
 ></app-list>

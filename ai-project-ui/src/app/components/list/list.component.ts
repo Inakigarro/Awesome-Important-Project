@@ -8,11 +8,14 @@ import {
 import { CommonModule } from "@angular/common";
 import { ListColumn, ListRow } from "./models";
 import { Observable } from "rxjs";
+import { Store } from "@ngrx/store";
+import { listActions } from "./state/list.actions";
+import { FormsModule } from "@angular/forms";
 
 @Component({
 	selector: "app-list",
 	standalone: true,
-	imports: [CommonModule],
+	imports: [CommonModule, FormsModule],
 	templateUrl: "./list.component.html",
 	styleUrl: "./list.component.scss",
 })
@@ -35,6 +38,7 @@ export class ListComponent<TItem> {
 	@Input() pageSizeOptions: number[] = [5, 10, 25, 50, 100];
 	@Input() pageSize: number = 10;
 	@Input() pageIndex: number = 0;
+	@Input() listId: string = 'list-id';
 
 	@Output() pageChange = new EventEmitter<{
 		pageIndex: number;
@@ -44,7 +48,7 @@ export class ListComponent<TItem> {
 	isMobile = false;
 	openedMenuRow: TItem | null = null;
 
-	constructor() {
+	constructor(private store: Store) {
 		this.checkMobile();
 	}
 
@@ -77,24 +81,29 @@ export class ListComponent<TItem> {
 		const value = +(event.target as HTMLSelectElement).value;
 		this.pageSize = value;
 		this.pageIndex = 0;
-		this.pageChange.emit({
-			pageIndex: this.pageIndex,
-			pageSize: this.pageSize,
-		});
+		this.store.dispatch(
+			listActions.pageChanged({
+				pageIndex: this.pageIndex,
+				pageSize: this.pageSize,
+				listId: this.listId
+			})
+		);
 	}
 
 	onPageChange(delta: number) {
-		// Como totalPages es un observable, necesitamos obtener su valor actual para validar el rango
 		this.totalPages
 			?.subscribe((tp) => {
 				const totalPages = tp ?? 1;
 				const newIndex = this.pageIndex + delta;
 				if (newIndex >= 0 && newIndex < totalPages) {
 					this.pageIndex = newIndex;
-					this.pageChange.emit({
-						pageIndex: this.pageIndex,
-						pageSize: this.pageSize,
-					});
+					this.store.dispatch(
+						listActions.pageChanged({
+							pageIndex: this.pageIndex,
+							pageSize: this.pageSize,
+							listId: this.listId
+						})
+					);
 				}
 			})
 			.unsubscribe();

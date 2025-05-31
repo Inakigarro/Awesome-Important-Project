@@ -28,3 +28,13 @@ export const selectCanchasError = createSelector(
 	selectCanchasState,
 	(state) => state.error
 );
+
+export const selectPageSize = createSelector(
+	selectCanchasState,
+	(state) => state.pageSize
+);
+
+export const selectPageNumber = createSelector(
+	selectCanchasState,
+	(state) => state.pageNumber
+);

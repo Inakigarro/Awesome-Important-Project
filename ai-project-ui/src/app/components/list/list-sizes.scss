@@ -1,0 +1,70 @@
+// Estilos utilitarios para tamaños de columnas y celdas en la lista
+
+// Ancho adaptable para columnas
+.list-col-xs {
+	min-width: 2.5em;
+	max-width: 8vw;
+	width: 6vw;
+}
+.list-col-sm {
+	min-width: 4em;
+	max-width: 16vw;
+	width: 10vw;
+}
+.list-col-md {
+	min-width: 6em;
+	max-width: 24vw;
+	width: 16vw;
+}
+.list-col-lg {
+	min-width: 10em;
+	max-width: 32vw;
+	width: 22vw;
+}
+.list-col-xl {
+	min-width: 16em;
+	max-width: 48vw;
+	width: 32vw;
+}
+
+// Alineación
+.list-align-left {
+	text-align: left !important;
+}
+.list-align-center {
+	text-align: center !important;
+}
+.list-align-right {
+	text-align: right !important;
+}
+
+// Altura de celda adaptable
+.list-row-xs {
+	height: 1.8em;
+}
+.list-row-sm {
+	height: 2.2em;
+}
+.list-row-md {
+	height: 2.7em;
+}
+.list-row-lg {
+	height: 3.3em;
+}
+
+// Responsive: en pantallas chicas, que las columnas ocupen el 100% si es necesario
+@media (max-width: 600px) {
+	.list-col-xs,
+	.list-col-sm,
+	.list-col-md,
+	.list-col-lg,
+	.list-col-xl {
+		min-width: min-content;
+		max-width: 100vw;
+		width: 100vw;
+	}
+}
+
+// Ejemplo de uso:
+// headerClass: 'list-col-sm list-align-center'
+// cellClass: ['list-col-sm', 'list-align-center', 'list-row-sm']

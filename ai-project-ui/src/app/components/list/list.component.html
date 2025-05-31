@@ -1,14 +1,22 @@
 <table class="app-list-table">
 	<thead>
 		<tr>
-			<th *ngFor="let col of columns">{{ col.header }}</th>
+			<th
+				*ngFor="let col of columns"
+				[ngClass]="col.classes"
+			>
+				{{ col.header }}
+			</th>
 			<th></th>
 			<!-- Columna de acciones -->
 		</tr>
 	</thead>
 	<tbody>
 		<tr *ngFor="let row of data | async">
-			<td *ngFor="let col of columns">
+			<td
+				*ngFor="let col of columns"
+				[ngClass]="col.classes"
+			>
 				{{ row[col.property] }}
 			</td>
 			<td class="actions-cell">

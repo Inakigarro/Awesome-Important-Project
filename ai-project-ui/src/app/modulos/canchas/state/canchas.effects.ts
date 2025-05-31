@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { CanchasService } from "../canchas.service";
-import { canchasLoaded, initCanchas } from "./canchas.actions";
-import { map, switchMap, filter } from "rxjs";
+import { canchasLoaded, initCanchas, crearCancha } from "./canchas.actions";
+import { map, switchMap, filter, tap } from "rxjs";
 import { ObtenerCanchasRequest } from "../models/ObtenerCanchasRequest";
 import { TipoSuelo } from "../models/models";
 import { listActions } from "../../../components/list/state/list.actions";
@@ -57,6 +57,27 @@ export class CanchasEffects {
 				);
 			})
 		)
+	);
+
+	public crearCancha$ = createEffect(() =>
+		this.actions$.pipe(
+			ofType(crearCancha),
+			switchMap(({ tipoSuelo }) =>
+				this.canchasService.createCancha({ tipoSuelo }).pipe(
+					switchMap(() => this.canchasService.getCanchas({ pageNumber: 1, pageSize: 10 }) as any),
+					map((response: any) =>
+						canchasLoaded({
+							canchas: response.items.map((item: any) => ({
+								id: item.id,
+								tipoSuelo: TipoSuelo[item.tipoSuelo],
+							})),
+							totalCount: response.totalCount,
+						})
+					)
+				)
+			)
+		),
+		{ dispatch: true }
 	);
 
 	constructor(

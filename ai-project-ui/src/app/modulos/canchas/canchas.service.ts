@@ -31,6 +31,10 @@ export class CanchasService {
 		return this.http.get<CanchasPagedResult>(`${this.canchasUrl}`, { params });
 	}
 
+	public createCancha(request: { tipoSuelo: number }) {
+		return this.http.post<any>(`${this.canchasUrl}`, request);
+	}
+
 	public dispatch(action: Action) {
 		this.store.dispatch(action);
 	}

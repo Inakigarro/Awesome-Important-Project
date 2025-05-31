@@ -1,5 +1,16 @@
 <h2>Administración de Canchas</h2>
 <p>Aquí podrás crear, editar y eliminar canchas.</p>
+<button class="btn btn-primary" (click)="openCreateModal()">Nueva Cancha</button>
+
+<app-crear-cancha-modal
+  [show]="showCreateModal"
+  [tipoSuelos]="tipoSuelos"
+  [form]="createForm"
+  (close)="closeCreateModal()"
+  (cancel)="onCancelCreateCancha()"
+  (save)="onSubmitCreateCancha($event)"
+></app-crear-cancha-modal>
+
 <app-list
 	[listId]="this.listId"
 	[columns]="this.columns"

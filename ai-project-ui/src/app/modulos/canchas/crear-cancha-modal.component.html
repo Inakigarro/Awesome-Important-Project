@@ -1,0 +1,27 @@
+<ng-container *ngIf="show">
+  <div class="modal-backdrop"></div>
+  <div class="modal modern-modal">
+    <div class="modal-header">
+      <h2>Nueva Cancha</h2>
+      <button class="close-btn" (click)="onClose()">&times;</button>
+    </div>
+    <form (ngSubmit)="onSave(canchaForm)" #canchaForm="ngForm" class="modal-body">
+      <div class="form-group">
+        <label for="tipoSuelo">Tipo de Suelo</label>
+        <select id="tipoSuelo" name="tipoSuelo" [(ngModel)]="form.tipoSuelo" required class="form-control select-control">
+          <option [ngValue]="null" disabled selected>Seleccione un tipo</option>
+          <option *ngFor="let ts of tipoSuelos" [ngValue]="ts.value">{{ ts.label }}</option>
+        </select>
+      </div>
+      <div class="modal-footer">
+        <app-button
+          [button]="{ id: 'cancel', label: 'Cancelar', kind: 'secondary', type: 'button' }"
+          (buttonClick)="onCancel()"
+        ></app-button>
+        <app-button
+          [button]="{ id: 'save', label: 'Guardar', kind: 'main', type: 'submit', disabled: !canchaForm.form.valid }"
+        ></app-button>
+      </div>
+    </form>
+  </div>
+</ng-container>

@@ -9,11 +9,13 @@ import { initCanchas } from "./state/canchas.actions";
 import { selectPageSize, selectPageNumber } from "./state/canchas.selectors";
 import { map } from "rxjs/operators";
 import { Store } from "@ngrx/store";
+import { FormsModule } from "@angular/forms";
+import { CrearCanchaModalComponent } from './crear-cancha-modal.component';
 
 @Component({
 	selector: "app-admin-canchas",
 	standalone: true,
-	imports: [CommonModule, ListComponent],
+	imports: [CommonModule, ListComponent, FormsModule, CrearCanchaModalComponent],
 	templateUrl: "./admin-canchas.component.html",
 	styleUrls: ["./admin-canchas.component.scss"],
 })
@@ -39,6 +41,14 @@ export class AdminCanchasComponent implements OnInit, OnDestroy {
 	public pageSize$ = this.store.select(selectPageSize);
 	public pageIndex$ = this.store.select(selectPageNumber).pipe(map((n) => n - 1));
 
+	showCreateModal = false;
+	createForm = { tipoSuelo: null as number | null };
+	tipoSuelos = [
+		{ value: 1, label: 'Polvo de Ladrillo' },
+		{ value: 2, label: 'Hormigón' },
+		{ value: 3, label: 'Césped' },
+	];
+
 	constructor(private readonly service: CanchasService, private readonly store: Store) {}
 
 	public ngOnInit() {
@@ -48,5 +58,29 @@ export class AdminCanchasComponent implements OnInit, OnDestroy {
 	public ngOnDestroy() {
 		this.destroy$.next();
 		this.destroy$.complete();
+	}
+
+	openCreateModal() {
+		this.showCreateModal = true;
+	}
+
+	closeCreateModal() {
+		this.showCreateModal = false;
+	}
+
+	onCancelCreateCancha() {
+		this.createForm = { tipoSuelo: null };
+		this.closeCreateModal();
+	}
+
+	public onSubmitCreateCancha(event: { tipoSuelo: number }) {
+		if (event && event.tipoSuelo) {
+			this.store.dispatch({
+				type: '[Canchas] Crear Cancha',
+				tipoSuelo: event.tipoSuelo
+			});
+			this.createForm = { tipoSuelo: null };
+			this.closeCreateModal();
+		}
 	}
 }

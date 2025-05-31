@@ -1,10 +1,15 @@
-export interface Cancha {
-    id: number;
-    tipoSueloId: number;
+export interface CanchaDto {
+	id: number;
+	tipoSuelo: number;
 }
 
-export const TipoSuelo = {
-    1: "Polvo de Ladrillo",
-    2: "Hormigon",
-    3: "Cesped",
+export interface Cancha {
+	id: number;
+	tipoSuelo: string;
+}
+
+export enum TipoSuelo {
+	"Polvo de Ladrillo" = 1,
+	"Hormigon" = 2,
+	"Cesped" = 3,
 }

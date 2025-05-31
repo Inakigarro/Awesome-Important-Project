@@ -7,6 +7,7 @@ import {
 } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { ListColumn, ListRow } from "./models";
+import { Observable } from "rxjs";
 
 @Component({
 	selector: "app-list",
@@ -16,13 +17,21 @@ import { ListColumn, ListRow } from "./models";
 	styleUrl: "./list.component.scss",
 })
 export class ListComponent<TItem> {
-	@Input() columns: ListColumn<TItem>[] = [];
-	@Input() data: ListRow<TItem>[] = [];
+	@Input()
+	public columns: ListColumn<TItem>[] = [];
+
+	@Input()
+	public data: Observable<TItem[]>;
+
+	@Input()
+	public totalItems: Observable<number>;
+
+	@Input()
+	public totalPages: Observable<number>;
 
 	@Output() edit = new EventEmitter<TItem>();
 	@Output() delete = new EventEmitter<TItem>();
 
-	@Input() totalItems: number = 0;
 	@Input() pageSizeOptions: number[] = [5, 10, 25, 50, 100];
 	@Input() pageSize: number = 10;
 	@Input() pageIndex: number = 0;
@@ -64,11 +73,6 @@ export class ListComponent<TItem> {
 		this.delete.emit(row);
 	}
 
-	get pagedData(): TItem[] {
-		const start = this.pageIndex * this.pageSize;
-		return this.data.slice(start, start + this.pageSize);
-	}
-
 	onPageSizeChange(event: Event) {
 		const value = +(event.target as HTMLSelectElement).value;
 		this.pageSize = value;
@@ -80,17 +84,19 @@ export class ListComponent<TItem> {
 	}
 
 	onPageChange(delta: number) {
-		const newIndex = this.pageIndex + delta;
-		if (newIndex >= 0 && newIndex < this.totalPages) {
-			this.pageIndex = newIndex;
-			this.pageChange.emit({
-				pageIndex: this.pageIndex,
-				pageSize: this.pageSize,
-			});
-		}
-	}
-
-	get totalPages(): number {
-		return Math.ceil(this.totalItems / this.pageSize) || 1;
+		// Como totalPages es un observable, necesitamos obtener su valor actual para validar el rango
+		this.totalPages
+			?.subscribe((tp) => {
+				const totalPages = tp ?? 1;
+				const newIndex = this.pageIndex + delta;
+				if (newIndex >= 0 && newIndex < totalPages) {
+					this.pageIndex = newIndex;
+					this.pageChange.emit({
+						pageIndex: this.pageIndex,
+						pageSize: this.pageSize,
+					});
+				}
+			})
+			.unsubscribe();
 	}
 }

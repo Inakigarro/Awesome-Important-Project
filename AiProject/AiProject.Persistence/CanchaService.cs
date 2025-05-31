@@ -24,7 +24,7 @@ public class CanchaService : ICanchaService
             Items = canchas.Items.Select(c => new CanchaDto
             {
                 Id = c.Id,
-                TipoSueloId = (int)c.TipoSuelo
+                TipoSuelo = c.TipoSuelo
             })
         };
     }

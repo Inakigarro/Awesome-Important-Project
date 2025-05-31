@@ -1,20 +1,30 @@
-import { Cancha } from "../models/models";
+import { Cancha, CanchaDto } from "../models/models";
 import { createReducer, on } from "@ngrx/store";
+import { canchasLoaded } from "./canchas.actions";
 
 export interface CanchasState {
-    canchas: Cancha[];
-    totalCount: number;
-    loading: boolean;
-    error: string | null;
+	canchas: Cancha[];
+	pageNumber: number;
+	pageSize: number;
+	totalCount: number;
+	loading: boolean;
+	error: string | null;
 }
 
 export const initialCanchasState: CanchasState = {
-    canchas: [],
-    totalCount: 0,
-    loading: false,
-    error: null,
+	canchas: [],
+	pageNumber: 1,
+	pageSize: 10,
+	totalCount: 0,
+	loading: false,
+	error: null,
 };
 
 export const canchasReducer = createReducer(
-    initialCanchasState,
+	initialCanchasState,
+	on(canchasLoaded, (state, action) => ({
+		...state,
+		canchas: action.canchas,
+		totalCount: action.totalCount,
+	}))
 );

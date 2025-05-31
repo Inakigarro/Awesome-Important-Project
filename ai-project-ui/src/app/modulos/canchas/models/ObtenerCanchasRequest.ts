@@ -1,11 +1,11 @@
-import { Cancha } from "./models";
+import { CanchaDto } from "./models";
 
 export interface ObtenerCanchasRequest {
-    pageNumber: number;
-    pageSize: number;
+	pageNumber: number;
+	pageSize: number;
 }
 
 export interface CanchasPagedResult {
-    items: Cancha[];
-    totalCount: number;
+	items: CanchaDto[];
+	totalCount: number;
 }

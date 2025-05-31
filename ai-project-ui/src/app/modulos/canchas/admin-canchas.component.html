@@ -2,6 +2,7 @@
 <p>Aquí podrás crear, editar y eliminar canchas.</p>
 <app-list
 	[columns]="this.columns"
-	[data]="this.data"
-	[totalItems]="this.totalCount"
+	[data]="this.data$"
+	[totalItems]="this.totalCount$"
+	[totalPages]="this.totalPages$"
 ></app-list>

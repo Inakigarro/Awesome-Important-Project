@@ -1,3 +1,5 @@
+using System.Linq;
+
 namespace AiProject.Contracts;
 
 public interface IGenericRepository<TEntity, TKey> where TEntity : class
@@ -8,4 +10,5 @@ public interface IGenericRepository<TEntity, TKey> where TEntity : class
     void UpdateAsync(TEntity entity);
     void DeleteAsync(TEntity entity);
     Task<PagedResultDto<TEntity>> GetPagedAsync(int pageNumber, int pageSize, CancellationToken cancellationToken);
+    IQueryable<TEntity> Query();
 }

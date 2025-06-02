@@ -16,6 +16,8 @@ public class ApplicationDbContext : IdentityDbContext<Usuario, IdentityRole<Guid
     public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
     public DbSet<Socio> Socios => Set<Socio>();
     public DbSet<Cancha> Canchas => Set<Cancha>();
+    public DbSet<Turno> Turnos => Set<Turno>();
+    public DbSet<PersonaTurno> PersonasTurno => Set<PersonaTurno>();
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
@@ -24,5 +26,7 @@ public class ApplicationDbContext : IdentityDbContext<Usuario, IdentityRole<Guid
         builder.ApplyConfiguration(new RefreshTokenConfiguration());
         builder.ApplyConfiguration(new SocioConfiguration());
         builder.ApplyConfiguration(new CanchaConfiguration());
+        builder.ApplyConfiguration(new TurnoConfiguration());
+        builder.ApplyConfiguration(new PersonaTurnoConfiguration());
     }
 }

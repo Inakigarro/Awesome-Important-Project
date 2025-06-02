@@ -1,6 +1,7 @@
 using AiProject.Contracts;
 using AiProject.Contracts.Auth;
 using AiProject.Contracts.Socios;
+using AiProject.Contracts.Turnos;
 using AiProject.Domain;
 using AiProject.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -69,7 +70,8 @@ public class Program
             .AddScoped<IUsuarioService, UsuarioService>()
             .AddScoped<IAuthService, AuthService>()
             .AddScoped<ICanchaService, CanchaService>()
-            .AddScoped<ISociosService, SociosService>();
+            .AddScoped<ISociosService, SociosService>()
+            .AddScoped<ITurnosService, TurnosService>();
 
         var app = builder.Build();
 

@@ -1,0 +1,60 @@
+<app-modal
+	[open]="show"
+	[title]="'Nueva Cancha'"
+	(closed)="close.emit()"
+	[width]="'400px'"
+>
+	<form
+		[formGroup]="form"
+		(ngSubmit)="onSave()"
+		class="modal-body"
+	>
+		<div class="form-group">
+			<label for="tipoSuelo">Tipo de Suelo</label>
+			<select
+				id="tipoSuelo"
+				formControlName="tipoSuelo"
+				required
+				class="form-control select-control"
+			>
+				<option
+					[ngValue]="null"
+					disabled
+					selected
+				>
+					Seleccione un tipo
+				</option>
+				<option
+					*ngFor="let ts of tipoSuelos"
+					[ngValue]="ts.value"
+				>
+					{{ ts.label }}
+				</option>
+			</select>
+		</div>
+	</form>
+	<div
+		modalFooter
+		class="modal-footer"
+	>
+		<app-button
+			[button]="{
+				id: 'cancel',
+				label: 'Cancelar',
+				kind: 'secondary',
+				type: 'button'
+			}"
+			(buttonClick)="close.emit()"
+		></app-button>
+		<app-button
+			[button]="{
+				id: 'save',
+				label: 'Guardar',
+				kind: 'main',
+				type: 'submit',
+			}"
+			[disabled]="!form.valid"
+			(buttonClick)="onSave()"
+		></app-button>
+	</div>
+</app-modal>

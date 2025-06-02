@@ -14,8 +14,9 @@
 		class="icon"
 		[class]="button.icon"
 	></span>
-	}
+	} @if (this.button.label.length> 0) {
 	<span class="btn-label">{{ button.label }}</span>
+	}
 	<span
 		*ngIf="hasLoading"
 		class="spinner"

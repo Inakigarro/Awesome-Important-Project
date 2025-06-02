@@ -1,5 +1,6 @@
 using AiProject.Contracts;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace AiProject.Persistence;
 
@@ -52,6 +53,11 @@ public class GenericRepository<TEntity, TKey> : IGenericRepository<TEntity, TKey
             Items = items,
             TotalCount = totalCount
         };
+    }
+
+    public IQueryable<TEntity> Query()
+    {
+        return _dbSet.AsQueryable();
     }
 
     protected virtual void Dispose(bool disposing)

@@ -1,0 +1,34 @@
+.form-group {
+	margin-bottom: 1.5rem;
+}
+
+.modal-body {
+	padding: 1.5rem;
+
+	label {
+		color: var(--color-secondary, #1976d2);
+	}
+}
+
+.modal-footer {
+	width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+}
+
+.select-control {
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	font-size: 1rem;
+	background: #fafbfc;
+	color: #222;
+	transition: border-color 0.2s;
+	margin-top: 0.25rem;
+}
+.select-control:focus {
+	border-color: #1976d2;
+	outline: none;
+}

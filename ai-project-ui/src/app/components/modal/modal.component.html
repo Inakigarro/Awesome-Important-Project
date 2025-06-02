@@ -1,0 +1,25 @@
+<div
+	class="modal-backdrop"
+	*ngIf="open"
+	(click)="onBackdropClick($event)"
+>
+	<div
+		class="modal-content"
+		[style.width]="width"
+		(click)="$event.stopPropagation()"
+	>
+		<div class="modal-header">
+			<span class="modal-title">{{ title }}</span>
+			<app-button
+				[button]="this.closeButton"
+				(buttonClick)="this.close()"
+			/>
+		</div>
+		<div class="modal-body">
+			<ng-content></ng-content>
+		</div>
+		<div class="modal-footer">
+			<ng-content select="[modalFooter]"></ng-content>
+		</div>
+	</div>
+</div>

@@ -13,6 +13,13 @@
 	(save)="onSubmitCreateCancha($event)"
 ></app-crear-cancha-modal>
 
+<app-editar-cancha-modal
+	[show]="this.showEditModal"
+	[cancha]="this.canchaSeleccionada"
+	(close)="this.onCloseEditModal()"
+	(cancel)="this.onCloseEditModal()"
+	(save)="this.onSubmitEditCancha($event)"/>
+
 <app-list
 	[listId]="this.listId"
 	[columns]="this.columns"
@@ -21,4 +28,5 @@
 	[totalPages]="this.totalPages$"
 	[pageSize]="(this.pageSize$ | async) ?? 10"
 	[pageIndex]="(this.pageIndex$ | async) ?? 0"
+	(edit)="onEdit($event)"
 ></app-list>

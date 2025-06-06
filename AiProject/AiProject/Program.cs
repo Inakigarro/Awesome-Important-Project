@@ -1,5 +1,6 @@
 using AiProject.Contracts;
 using AiProject.Contracts.Auth;
+using AiProject.Contracts.Canchas;
 using AiProject.Contracts.Socios;
 using AiProject.Contracts.Turnos;
 using AiProject.Domain;
@@ -22,7 +23,7 @@ public class Program
         builder.Services.AddControllers();
         builder.Services.AddOpenApi();
 
-        // Configuración de DbContext con SQL Server
+        // Configuraciï¿½n de DbContext con SQL Server
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

@@ -1,7 +1,6 @@
-using AiProject.Contracts.Canchas;
 using AiProject.Domain;
 
-namespace AiProject.Contracts;
+namespace AiProject.Contracts.Canchas;
 
 public interface ICanchaService
 {

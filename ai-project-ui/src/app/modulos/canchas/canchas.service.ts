@@ -10,6 +10,7 @@ import {
 	selectTotalCount,
 	selectTotalPages,
 } from "./state/canchas.selectors";
+import { EditarCanchaRequest } from "./models/EditarCanchaRequest";
 
 @Injectable({
 	providedIn: "root",
@@ -33,6 +34,10 @@ export class CanchasService {
 
 	public createCancha(request: { tipoSuelo: number }) {
 		return this.http.post<any>(`${this.canchasUrl}`, request);
+	}
+
+	public updateCancha(request: EditarCanchaRequest) {
+		return this.http.put<any>(`${this.canchasUrl}/Actualizar`, request);
 	}
 
 	public dispatch(action: Action) {

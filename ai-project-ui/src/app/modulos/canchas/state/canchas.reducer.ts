@@ -1,6 +1,6 @@
-import { Cancha, CanchaDto } from "../models/models";
+import { Cancha } from "../models/models";
 import { createReducer, on } from "@ngrx/store";
-import { canchasLoaded } from "./canchas.actions";
+import { canchasActions } from "./canchas.actions";
 
 export interface CanchasState {
 	canchas: Cancha[];
@@ -22,7 +22,7 @@ export const initialCanchasState: CanchasState = {
 
 export const canchasReducer = createReducer(
 	initialCanchasState,
-	on(canchasLoaded, (state, action) => ({
+	on(canchasActions.canchasLoaded, (state, action) => ({
 		...state,
 		canchas: action.canchas,
 		totalCount: action.totalCount,

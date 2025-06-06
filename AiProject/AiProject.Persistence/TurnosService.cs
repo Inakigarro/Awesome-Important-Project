@@ -55,13 +55,13 @@ public class TurnosService : ITurnosService
             HoraInicio = request.HoraInicio,
             HoraFin = request.HoraFin,
             SocioSolicitanteId = request.SocioSolicitanteId,
-            Personas = request.Personas.Select(p => new PersonaTurno
+            Personas = [.. request.Personas.Select(p => new PersonaTurno
             {
                 Id = Guid.NewGuid(),
                 SocioId = p.SocioId,
                 Nombre = p.Nombre,
                 Apellido = p.Apellido
-            }).ToList()
+            })]
         };
 
         await turnoRepo.AddAsync(turno, cancellationToken);

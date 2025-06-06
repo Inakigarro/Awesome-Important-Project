@@ -1,0 +1,144 @@
+.turnos-header {
+	display: flex;
+	flex-direction: column;
+	align-items: start;
+
+	.turnos-title {
+		font-size: 1.5rem;
+		font-weight: 600;
+		color: var(--color-primary, #8d5524);
+	}
+
+	.turnos-subtitle {
+		margin: 0;
+		font-size: 1.1rem;
+		color: var(--color-text, #333);
+	}
+}
+.turnos-header label {
+	font-weight: 600;
+}
+.semana-nav {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+}
+.turnos-grid table {
+	width: 100%;
+	border-collapse: collapse;
+	background: var(--color-bg, #fff);
+}
+.turnos-grid th,
+.turnos-grid td {
+	border: 1px solid var(--color-border, #bfa171);
+	padding: 0.5rem 0.75rem;
+	text-align: center;
+}
+.turnos-grid th {
+	background: var(--color-bg-alt, #e9dec3);
+	color: var(--color-primary, #8d5524);
+}
+.turnos-grid td button {
+	background: var(--color-primary, #8d5524);
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	padding: 0.3em 1em;
+	cursor: pointer;
+	font-size: 1em;
+	transition: background 0.2s;
+}
+.turnos-grid td button:hover {
+	background: #a9743a;
+}
+.turnos-carrusel {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	gap: 1.5rem;
+	margin-top: 2rem;
+}
+.turnos-carrusel button {
+	background: var(--color-primary, #8d5524);
+	color: #fff;
+	border: none;
+	border-radius: 50%;
+	width: 2.5rem;
+	height: 2.5rem;
+	font-size: 1.5rem;
+	cursor: pointer;
+	box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+	transition: background 0.2s;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+.turnos-carrusel button:hover {
+	background: #a9743a;
+}
+.carrusel-viewport {
+	width: 340px;
+	min-height: 420px;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+.carrusel-dia {
+	width: 100%;
+	min-width: 320px;
+	max-width: 340px;
+	background: var(--color-bg, #fff);
+	border-radius: 16px;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+	padding: 1.5rem 1.2rem 1.2rem 1.2rem;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	transition: transform 0.35s cubic-bezier(0.4, 1.4, 0.6, 1);
+}
+.carrusel-dia-header {
+	font-size: 1.1em;
+	font-weight: 600;
+	color: var(--color-primary, #8d5524);
+	margin-bottom: 1.2rem;
+	text-align: center;
+}
+.carrusel-horarios {
+	display: flex;
+	flex-direction: column;
+	gap: 0.7rem;
+}
+.carrusel-horario {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: var(--color-bg-alt, #f5f5dc);
+	border-radius: 8px;
+	padding: 0.5rem 1rem;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
+}
+.carrusel-horario button {
+	background: var(--color-primary, #8d5524);
+	color: #fff;
+	border: none;
+	border-radius: 4px;
+	padding: 0.3em 1em;
+	cursor: pointer;
+	font-size: 1em;
+	transition: background 0.2s;
+}
+.carrusel-horario button:hover {
+	background: #a9743a;
+}
+@media (max-width: 600px) {
+	.carrusel-dia {
+		min-width: 95vw;
+		max-width: 98vw;
+		padding: 1rem 0.5rem;
+	}
+	.turnos-carrusel {
+		gap: 0.5rem;
+	}
+}

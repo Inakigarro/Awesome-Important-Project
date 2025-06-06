@@ -1,0 +1,64 @@
+<div class="turnos-header">
+	<span class="turnos-title">Turnos disponibles</span>
+	<div class="turnos-subtitle">
+		<span>
+			{{ diasSemana[0] | date : "dd/MM" }} -
+			{{ diasSemana[5] | date : "dd/MM" }}
+		</span>
+	</div>
+</div>
+
+<div class="turnos-selector">
+	<label for="canchaSelect">Cancha:</label>
+	<select
+		id="canchaSelect"
+		[(ngModel)]="selectedCanchaId"
+		(change)="onCanchaChange(selectedCanchaId)"
+	>
+		<option
+			*ngFor="let cancha of canchas"
+			[value]="cancha.id"
+		>
+			Cancha {{ cancha.id }} ({{ cancha.tipoSuelo }})
+		</option>
+	</select>
+</div>
+
+<div class="turnos-carrusel">
+	<app-button
+		[button]="this.backButton"
+		(buttonClick)="carruselDiaIndex = (carruselDiaIndex - 1 + 6) % 6"
+	/>
+	<div class="carrusel-viewport">
+		<div
+			class="carrusel-dia"
+			[style.transform]="'translateX(' + -carruselDiaIndex * 100 + '%)'"
+		>
+			<div class="carrusel-dia-header">
+				<span>{{ diasSemana[carruselDiaIndex] | date : "EEEE dd/MM" }}</span>
+			</div>
+			<div class="carrusel-horarios">
+				<div
+					*ngFor="let hora of horas; index as $index"
+					class="carrusel-horario"
+				>
+					<ng-container
+						*ngIf="
+							getTurno(diasSemana[carruselDiaIndex], hora) as turno;
+							else libre
+						"
+					>
+						<span *ngIf="turno">Reservado</span>
+					</ng-container>
+					<ng-template #libre>
+						<app-button [button]="this.carruselButtons[$index]" />
+					</ng-template>
+				</div>
+			</div>
+		</div>
+	</div>
+	<app-button
+		[button]="this.forwardButton"
+		(buttonClick)="carruselDiaIndex = (carruselDiaIndex + 1) % 6"
+	/>
+</div>
